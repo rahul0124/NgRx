@@ -1,25 +1,44 @@
-import { User } from "../shared/user";
-import { Action } from '@ngrx/store';
-import * as detailsActions from './details.actions';
+import { DetailsState } from "../shared/user";
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { ActionsUnion, ActionTypes } from './details.actions';
 
-const initialState = {
-    ingredients: [
-    new User('Rahul','rahul@gmail.com','9410000000'),
-  ]
-};
-  
+
+  const initialState: DetailsState = {
+    Details: [],
+    error: "",
+  };
+
+
 export function DetailsReducer(state = initialState,
-     action: detailsActions.AddUser){
+     action: ActionsUnion){
     switch(action.type){
-        case detailsActions.ADD_USER:
-            //state.ingredients.push()  it will add items to the existing state
-            return {
-                ...state,   // copy all state with ...
-                ingredients: [...state.ingredients, action.payload]
-            };
+            case ActionTypes.LoadDataSuccess:
+                return{
+                    ...state,
+                    DetailsState: action.payload
+                }
+
+                case ActionTypes.LoadDataFailure:
+                    return{
+                        ...state,
+                        DetailsState:[],
+                        error: action.payload
+                                            
+                    };
+                    
             default:
                 return state;
-
-    }
-
+            }
 }
+
+const featureState = createFeatureSelector<DetailsState>("reducer");
+
+export const getDetails = createSelector(
+    featureState,
+    (state) => state.Details
+  );
+export const getError = createSelector(
+    featureState,
+    (state) => state.error
+  );
+  

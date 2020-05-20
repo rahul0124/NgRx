@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/shared/user';
 import { NgForm } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import * as detailsActions from '../../store/details.actions';
+import { DataService } from 'src/app/data.service';
+
 
 
 @Component({
@@ -11,17 +11,15 @@ import * as detailsActions from '../../store/details.actions';
   styleUrls: ['./edit-details.component.css']
 })
 export class EditDetailsComponent implements OnInit {
-
-
   
-  constructor(private store: Store<{ reducer: {user: User[]}}>) { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
   }
   onAddItems(form: NgForm){
     const value = form.value;
     const newUser = new User(value.name, value.email, value.contact);
-    this.store.dispatch(new detailsActions.AddUser(newUser));
+    this.dataService.AddData(newUser);
   }
 
 }

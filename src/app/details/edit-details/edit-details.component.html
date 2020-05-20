@@ -2,19 +2,20 @@
     <hr>
     <div class="col-sm-8 form-group">
         <label for="name">Name</label>
-        <input type="text" ngModel name="name" id="name" class="form-control">
+        <input type="text" ngModel name="name" id="name" class="form-control" required>
     </div>
     <div class="col-sm-8 form-group">
         <label for="amount">Email</label>
-        <input type="string" ngModel name="email" id="email" class="form-control">
+        <input type="string" ngModel name="email" id="email" class="form-control" required
+        pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
     </div>
     <div class="col-sm-8 form-group">
         <label for="amount">Contact:</label>
-        <input type="string" ngModel name="contact" id="contact" class="form-control">
+        <input type="string" ngModel name="contact" id="contact" class="form-control" required>
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <button class="btn btn-success" type="submit">Add</button>
+            <button class="btn btn-success" type="submit" [disabled]="!f.valid">Add</button>
         </div>
     </div>
 
