@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/shared/user';
-import { NgForm } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataService } from 'src/app/data.service';
 
 
@@ -12,14 +12,26 @@ import { DataService } from 'src/app/data.service';
 })
 export class EditDetailsComponent implements OnInit {
   
-  constructor(private dataService: DataService) { }
+  detailsForm: FormGroup;
+  show_name_error: string;
+  constructor(private dataService: DataService) {
+    
+   }
 
   ngOnInit(): void {
+    this.detailsForm = new FormGroup({
+      'username': new FormControl(null, [Validators.required]),
+      'email': new FormControl(null, [Validators.required, Validators.email]),
+      'contact': new FormControl(null,[Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")])
+    });
   }
-  onAddItems(form: NgForm){
-    const value = form.value;
-    const newUser = new User(value.name, value.email, value.contact);
+
+  onSubmit(){
+    const value = this.detailsForm.value;
+
+    const newUser = new User(value.username, value.email, value.contact);
     this.dataService.AddData(newUser);
+
   }
 
 }

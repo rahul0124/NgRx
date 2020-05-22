@@ -2,7 +2,10 @@ export class User{
     constructor(public name: string, public email: string, public contact: string){}
 
 }
-export interface DetailsState {
-    Details: Array<any>;
-    error: String;
-  }
+export interface Product {
+    userId: number;
+    id: number | null;
+    title: string;
+    completed: boolean;
+}
+
